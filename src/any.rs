@@ -1,5 +1,5 @@
 /*!
-# Module zcore::any
+# Module zstd::any
 
 ---
 */

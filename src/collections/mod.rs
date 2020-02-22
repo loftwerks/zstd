@@ -4,4 +4,4 @@
 ---
 */
 
-mod hash_map;
+pub mod generic;
