@@ -5,7 +5,8 @@
 #![allow(clippy::needless_return)]
 #![no_std]
 /*!
-# Zesty - Core
+# Crate zstd
+*A lightweight alternative to the Rust standard library*
 
 ---
 */
@@ -20,9 +21,7 @@ pub extern crate eco;
 pub mod any;
 pub mod kernel;
 pub mod console;
-
-// Internal modules
-pub(crate) mod vga_buffer;
+pub mod vga_buffer;
 
 // Private modules
 mod panic;

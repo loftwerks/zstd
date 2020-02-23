@@ -69,7 +69,7 @@ pub struct Writer {
 }
 
 impl Writer {
-  pub fn write_byte(&mut self, byte: u8) {
+  pub fn write_byte(&mut self, ascii_character: u8) {
     match byte {
       b'\n' => self.new_line(),
       byte => {
@@ -82,8 +82,8 @@ impl Writer {
 
         let color_code = self.color_code;
         self.buffer.chars[row][col].write(ScreenChar {
-          ascii_character: byte,
-          color_code: color_code,
+          ascii_character,
+          color_code,
         });
         self.column_position += 1;
       }
@@ -136,4 +136,21 @@ lazy_static! {
         color_code: ColorCode::new(Color::Yellow, Color::Black),
         buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
     });
+}
+
+#[macro_export]
+macro_rules! print {
+    ($($arg:tt)*) => ($crate::vga_buffer::_print(format_args!($($arg)*)));
+}
+
+#[macro_export]
+macro_rules! println {
+    () => ($crate::print!("\n"));
+    ($($arg:tt)*) => ($crate::print!("{}\n", format_args!($($arg)*)));
+}
+
+#[doc(hidden)]
+pub fn _print(args: fmt::Arguments) {
+  use core::fmt::Write;
+  DEFAULT_WRITER.lock().write_fmt(args).unwrap();
 }
