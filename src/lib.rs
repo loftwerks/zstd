@@ -19,9 +19,8 @@ pub extern crate eco;
 
 // Public modules
 pub mod any;
-pub mod kernel;
 pub mod console;
-pub mod vga_buffer;
+pub mod vga;
 
 // Private modules
 mod panic;

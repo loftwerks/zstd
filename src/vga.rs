@@ -1,5 +1,8 @@
 /*!
+# Module zstd::vga_buffer
 
+---
+In this module, there are utilities for
 */
 
 use core::fmt;

@@ -6,10 +6,12 @@
 
 use core::fmt;
 use core::fmt::{Formatter, Error};
+use alloc::boxed::Box;
 
 /// # Struct Array<T>
 ///
 /// ```
+/// use collections::generic::Array;
 /// pub fn array() -> Array<char> {
 ///   let x = Array::<char>::new(['h', 'e', 'l', 'l', 'o']);
 ///
@@ -21,11 +23,6 @@ pub struct Array<T> {
 }
 
 impl<T> Array<T> {
-  pub fn new(arr: &[T]) -> &Self {
-    return &Self {
-      arr: *arr
-    };
-  }
 }
 
 impl<T> fmt::Debug for Array<T> {
