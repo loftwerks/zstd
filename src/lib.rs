@@ -1,4 +1,4 @@
-#![crate_name = "zcore"]
+#![crate_name = "zstd"]
 #![warn(missing_docs)]
 #![allow(unused_imports)]
 #![allow(dead_code)]
@@ -12,13 +12,18 @@
 
 pub use prelude::*;
 
-pub mod any;
-pub mod collections;
-pub mod eco;
-pub mod kernel;
+// External crates
+pub extern crate collections;
+pub extern crate eco;
 
-pub(crate) mod console;
+// Public modules
+pub mod any;
+pub mod kernel;
+pub mod console;
+
+// Internal modules
 pub(crate) mod vga_buffer;
 
+// Private modules
 mod panic;
 mod prelude;
