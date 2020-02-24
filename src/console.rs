@@ -4,7 +4,7 @@
 ---
 */
 
-use crate::vga::{
+use crate::buffer::{
   BUFFER_HEIGHT,
   BUFFER_WIDTH,
   DEFAULT_WRITER,
