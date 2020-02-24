@@ -1,11 +1,15 @@
-#![crate_name = "zstd"]
-#![warn(missing_docs)]
-#![allow(unused_imports)]
-#![allow(dead_code)]
-#![allow(clippy::needless_return)]
-#![no_std]
+#![cfg_attr(not(test), no_std)]
+#![cfg_attr(feature = "const_fn", feature(const_fn))]
+#![cfg_attr(feature = "const_fn", feature(const_in_array_repeat_expressions))]
+#![cfg_attr(feature = "inline_asm", feature(asm))]
+#![cfg_attr(feature = "abi_x86_interrupt", feature(abi_x86_interrupt))]
+#![cfg_attr(feature = "deny-warnings", deny(warnings))]
+#![cfg_attr(feature = "deny-warnings", deny(missing_docs))]
+#![cfg_attr(not(feature = "deny-warnings"), warn(missing_docs))]
+#![deny(missing_debug_implementations)]
 /*!
-# Zesty - Core
+# Crate zstd
+*A lightweight alternative to the Rust standard library*
 
 ---
 */
@@ -18,11 +22,8 @@ pub extern crate eco;
 
 // Public modules
 pub mod any;
-pub mod kernel;
 pub mod console;
-
-// Internal modules
-pub(crate) mod vga_buffer;
+pub mod vga;
 
 // Private modules
 mod panic;
