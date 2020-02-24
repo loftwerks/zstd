@@ -8,11 +8,7 @@
 #![cfg_attr(not(feature = "deny-warnings"), warn(missing_docs))]
 #![deny(missing_debug_implementations)]
 /*!
-# Crate collections
+# Crate mem
 
 ---
-
-Collections for the Z standard library
 */
-
-pub mod generic;

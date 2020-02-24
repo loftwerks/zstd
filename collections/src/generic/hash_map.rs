@@ -209,3 +209,44 @@ pub struct OccupiedEntry<'a, K: 'a, V: 'a> {
 pub struct VacantEntry<'a, K: 'a, V: 'a> {
   base: base::RustcVacantEntry<'a, K, V>,
 }
+
+#[derive(Clone)]
+pub struct RandomState {
+  k0: u64,
+  k1: u64,
+}
+
+impl RandomState {
+  /// Constructs a new `RandomState` that is initialized with random keys.
+  ///
+  /// # Examples
+  ///
+  /// ```
+  /// use std::collections::hash_map::RandomState;
+  ///
+  /// let s = RandomState::new();
+  /// ```
+  #[inline]
+  pub fn new() -> RandomState {
+    // Historically this function did not cache keys from the OS and instead
+    // simply always called `rand::thread_rng().gen()` twice. In #31356 it
+    // was discovered, however, that because we re-seed the thread-local RNG
+    // from the OS periodically that this can cause excessive slowdown when
+    // many hash maps are created on a thread. To solve this performance
+    // trap we cache the first set of randomly generated keys per-thread.
+    //
+    // Later in #36481 it was discovered that exposing a deterministic
+    // iteration order allows a form of DOS attack. To counter that we
+    // increment one of the seeds on every RandomState creation, giving
+    // every corresponding HashMap a different iteration order.
+    thread_local!(static KEYS: Cell<(u64, u64)> = {
+            Cell::new(sys::hashmap_random_keys())
+        });
+
+    KEYS.with(|keys| {
+      let (k0, k1) = keys.get();
+      keys.set((k0.wrapping_add(1), k1));
+      RandomState { k0, k1 }
+    })
+  }
+}

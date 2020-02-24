@@ -8,11 +8,16 @@
 #![cfg_attr(not(feature = "deny-warnings"), warn(missing_docs))]
 #![deny(missing_debug_implementations)]
 /*!
-# Crate collections
+# Crate alloc
 
 ---
-
-Collections for the Z standard library
 */
 
-pub mod generic;
+extern crate collections;
+
+#[cfg(not(test))]
+pub mod borrow;
+pub mod string;
+
+#[cfg(test)]
+mod borrow;
